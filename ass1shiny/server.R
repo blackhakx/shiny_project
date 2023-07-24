@@ -1,28 +1,44 @@
-#
-# This is the server logic of a Shiny web application. You can run the
-# application by clicking 'Run App' above.
-#
-# Find out more about building applications with Shiny here:
-#
-#    http://shiny.rstudio.com/
-#
+
 
 library(shiny)
+library(tidyverse)
+library(skimr)
+library(DT)
+
+data1 <- read.csv("Ass1Data.csv")
+
+data1$Operator <- as.factor(data1$Operator)
+data1$Priority <- as.factor(data1$Priority)
+data1$Price <- as.factor(data1$Price)
+data1$Temp <- as.factor(data1$Temp)
+data1$Location <- as.factor(data1$Location)
+data1$Agreed <- as.factor(data1$Agreed)
+data1$State <- as.factor(data1$State)
+data1$Speed <- as.factor(data1$Speed)
+data1$Duration <- as.factor(data1$Duration)
+data1$Class <- as.factor(data1$Class)
+data1$Surface <- as.factor(data1$Surface)
+data1$Date <- as.Date(data1$Date, format = "%Y-%m-%d")
 
 # Define server logic required to draw a histogram
 function(input, output, session) {
 
-    output$distPlot <- renderPlot({
-
-        # generate bins based on input$bins from ui.R
-        x    <- faithful[, 2]
-        bins <- seq(min(x), max(x), length.out = input$bins + 1)
-
-        # draw the histogram with the specified number of bins
-        hist(x, breaks = bins, col = 'darkgray', border = 'white',
-             xlab = 'Waiting time to next eruption (in mins)',
-             main = 'Histogram of waiting times')
-
+    output$Summary1 <- renderPrint({
+      summary(as.data.frame(data1))
     })
+    output$Summary2 <- renderPrint({
+      glimpse(data1)
+    })
+    output$Summary3 <- renderPrint({
+    })
+    
+    output$TableData1 <- DT::renderDataTable(
+      datatable(data = as.data.frame(data1),
+                options = list(
+                  lengthMenu = list(c(10, 25, 50, 100, -1), c('10', '25', '50', '100', 'All')),
+                  pageLenth = 10
+                )
+                )
+    )
+}    
 
-}

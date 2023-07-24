@@ -1,0 +1,14 @@
+---
+title: "datatest"
+author: "Kenneth Rosal"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+
+
+```{r}
+data1 <- csv.read("Ass1Data.csv")
+summary(data1)
+```
+

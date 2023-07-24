@@ -1,23 +1,27 @@
-#
-# This is the user-interface definition of a Shiny web application. You can
-# run the application by clicking 'Run App' above.
-#
-# Find out more about building applications with Shiny here:
-#
-#    http://shiny.rstudio.com/
-#
-
 library(shiny)
 
-# Define UI for application that draws a histogram
+# data1 <- read.csv("Ass1Data.csv")
+
+
+
 fluidPage(
-  useShinyjs(),
   titlePanel("DATA423 Assignment 1"),
   
   tabsetPanel(
-    tabPanel("Summary",
-             h3("Summary"),
-             verbatimTextOutput(outputId = "Summary1")
+    tabPanel("Data",
+             h2("Data"),
+             tabsetPanel(
+               tabPanel("Summary",
+                 h3("Summary"),
+                 verbatimTextOutput(outputId = "Summary3"),
+                 verbatimTextOutput(outputId = "Summary1"),
+                 verbatimTextOutput(outputId = "Summary2")
+               ),
+               tabPanel("Table",
+                        h3("Raw Data Table"),
+                        DT::dataTableOutput(outputId = "TableData1")
+                        )
+              )
              )
   )
 )
